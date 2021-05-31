@@ -1,9 +1,12 @@
-var http = require("http");
+const Koa = require('koa');
+const app = new Koa();
+require('./bootstrap');
 
-//create a server object:
-http
-  .createServer(function(req, res) {
-    res.write("Hello World!"); //write a response to the client
-    res.end(); //end the response
-  })
-  .listen(8080); //the server object listens on port 8080
+app.use(async ctx => {
+  var response = await db.query('SELECT 1 + 3 AS solution');
+  ctx.body = response[0];
+});
+
+app.listen(3000,()=>{
+  console.log('Server started at : 3000')
+});
